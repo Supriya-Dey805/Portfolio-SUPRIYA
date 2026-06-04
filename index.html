@@ -1,343 +1,558 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Supriya Dey | Portfolio</title>
-    
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-
-    <style>
-        /* --- GLOBAL STYLES --- */
-        * {
-            margin: 0; padding: 0;
-            box-sizing: border-box;
-            text-decoration: none;
-            border: none; outline: none;
-            scroll-behavior: smooth;
-            font-family: 'Poppins', sans-serif;
-        }
-
-        :root {
-            --bg-color: #081b29;
-            --second-bg-color: #112e42;
-            --text-color: #ededed;
-            --main-color: #00abf0;
-            --accent-color: #b742ff;
-            --glass-bg: rgba(255, 255, 255, 0.05);
-            --glass-border: rgba(255, 255, 255, 0.1);
-        }
-
-        body {
-            background: var(--bg-color);
-            color: var(--text-color);
-            overflow-x: hidden;
-        }
-
-        /* --- ANIMATION STYLES --- */
-        .reveal {
-            position: relative;
-            transform: translateY(30px);
-            opacity: 0;
-            transition: 1s all ease;
-        }
-
-        .reveal.active {
-            transform: translateY(0);
-            opacity: 1;
-        }
-
-        /* Sticky Glass Header */
-        .header {
-            position: fixed;
-            top: 0; left: 0; width: 100%;
-            padding: 1.5rem 10%;
-            background: rgba(8, 27, 41, 0.7);
-            backdrop-filter: blur(15px);
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            z-index: 100;
-            border-bottom: 1px solid var(--glass-border);
-        }
-
-        .logo { font-size: 1.8rem; color: var(--text-color); font-weight: 700; }
-        .logo span { color: var(--main-color); }
-
-        .navbar a {
-            font-size: 1.1rem;
-            color: var(--text-color);
-            font-weight: 500;
-            margin-left: 2.5rem;
-            transition: .3s;
-        }
-
-        .navbar a:hover, .navbar a.active { color: var(--main-color); text-shadow: 0 0 10px var(--main-color); }
-
-        section { min-height: 100vh; padding: 10rem 10% 2rem; }
-        .heading { text-align: center; font-size: 3.5rem; margin-bottom: 4rem; font-weight: 800; }
-        .heading span { color: var(--main-color); }
-
-        /* --- HOME SECTION --- */
-        .home { display: flex; align-items: center; justify-content: space-between; gap: 2rem; }
-        .home-content h1 { font-size: 4.5rem; font-weight: 800; line-height: 1.1; margin: 1rem 0; }
-        .home-content h1 span { color: var(--main-color); text-shadow: 0 0 15px var(--main-color); }
-        .home-content p { font-size: 1.1rem; margin: 1.5rem 0 2.5rem; color: #b0c4de; line-height: 1.8; max-width: 600px; }
-
-        .social-media a {
-            display: inline-flex;
-            justify-content: center;
-            align-items: center;
-            width: 3.5rem; height: 3.5rem;
-            background: var(--glass-bg);
-            border: 1px solid var(--main-color);
-            border-radius: 50%;
-            font-size: 1.8rem;
-            color: var(--main-color);
-            margin: 0 1.5rem 3rem 0;
-            transition: .5s ease;
-        }
-
-        .social-media a:hover { background: var(--main-color); color: var(--bg-color); box-shadow: 0 0 2rem var(--main-color); transform: translateY(-5px); }
-
-        .btn {
-            display: inline-block;
-            padding: 1rem 2.8rem;
-            background: var(--main-color);
-            border-radius: 3rem;
-            font-size: 1.1rem;
-            color: var(--bg-color);
-            font-weight: 700;
-            box-shadow: 0 0 1.5rem var(--main-color);
-            transition: .5s ease;
-        }
-
-        .btn:hover { box-shadow: none; transform: scale(1.05); }
-
-        .home-img .glowing-circle {
-            position: relative; width: 30vw; height: 30vw; border-radius: 50%;
-            display: flex; justify-content: center; align-items: center;
-        }
-
-        .glowing-circle span {
-            position: absolute; width: 100%; height: 100%;
-            background: linear-gradient(135deg, var(--main-color), var(--accent-color));
-            border-radius: 50%; filter: blur(15px); animation: rotateCircle 8s linear infinite;
-        }
-
-        .glowing-circle .image { position: relative; width: 92%; height: 92%; background: var(--bg-color); border-radius: 50%; z-index: 1; overflow: hidden; border: 4px solid var(--second-bg-color); }
-        .image img { width: 100%; height: 100%; object-fit: cover; }
-
-        @keyframes rotateCircle { 100% { transform: rotate(360deg); } }
-
-        /* --- ABOUT SECTION --- */
-        .about { display: flex; justify-content: center; align-items: center; gap: 4rem; background: var(--second-bg-color); }
-        .about-img img { width: 25vw; border-radius: 2rem; box-shadow: 0 0 2rem var(--main-color); }
-        .about-content h2 { text-align: left; line-height: 1.2; }
-        .about-content h3 { font-size: 2rem; margin-top: 1rem; color: var(--main-color); }
-        .about-content p { font-size: 1.1rem; margin: 2rem 0 3rem; line-height: 1.7; }
-
-        /* --- SKILLS SECTION --- */
-        .skills-main { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; }
-        .skill-bar { margin-bottom: 2.5rem; }
-        .skill-bar .info { display: flex; justify-content: space-between; margin-bottom: 1rem; font-weight: 600; }
-        .skill-bar .bar { width: 100%; height: 12px; background: var(--bg-color); border-radius: 20px; }
-        .skill-bar .bar span { height: 100%; background: linear-gradient(90deg, var(--main-color), var(--accent-color)); border-radius: 20px; display: block; box-shadow: 0 0 15px var(--main-color); }
-
-        /* --- PROJECT SECTION --- */
-        .projects { background: var(--second-bg-color); }
-        .portfolio-container { display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 3rem; }
-        .portfolio-box { position: relative; border-radius: 2rem; overflow: hidden; background: var(--glass-bg); border: 1px solid var(--glass-border); transition: .5s ease; }
-        .portfolio-box img { width: 100%; height: 280px; object-fit: cover; opacity: 0.8; transition: .5s ease; }
-        .portfolio-box:hover img { opacity: 1; transform: scale(1.05); }
-        .portfolio-layer { position: absolute; bottom: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(rgba(0,0,0,0.1), var(--main-color)); display: flex; justify-content: center; align-items: center; flex-direction: column; text-align: center; padding: 0 2.5rem; transform: translateY(100%); transition: .5s ease; }
-        .portfolio-box:hover .portfolio-layer { transform: translateY(0); }
-        .portfolio-layer h4 { font-size: 2rem; color: var(--bg-color); font-weight: 800; }
-        .portfolio-layer p { font-size: 1rem; color: var(--bg-color); margin: 0.8rem 0 1.5rem; font-weight: 500; }
-        .portfolio-layer i { font-size: 2rem; color: var(--main-color); background: var(--text-color); padding: 1rem; border-radius: 50%; }
-
-        /* --- CONTACT SECTION --- */
-        .contact form { max-width: 70rem; margin: 1rem auto; text-align: center; margin-bottom: 3rem; }
-        .contact form .input-box { display: flex; justify-content: space-between; flex-wrap: wrap; }
-        .contact form .input-box input, .contact form textarea { width: 100%; padding: 1.5rem; font-size: 1.1rem; color: var(--text-color); background: var(--second-bg-color); border-radius: .8rem; margin: .7rem 0; border: 1px solid var(--glass-border); }
-        .contact form .input-box input { width: 49%; }
-        .contact form textarea { resize: none; }
-
-        /* --- FOOTER --- */
-        .footer { display: flex; justify-content: space-between; align-items: center; padding: 2rem 9%; background: var(--second-bg-color); border-top: 1px solid var(--glass-border); }
-        .footer-iconTop a { display: inline-flex; justify-content: center; align-items: center; padding: .8rem; background: var(--main-color); border-radius: .8rem; transition: .5s ease; }
-        .footer-iconTop a i { font-size: 1.8rem; color: var(--bg-color); }
-
-        @media (max-width: 991px) {
-            .home { flex-direction: column-reverse; text-align: center; padding-top: 12rem; }
-            .home-img .glowing-circle { width: 350px; height: 350px; }
-            .about { flex-direction: column; text-align: center; }
-            .about-img img { width: 80%; }
-            .skills-main { grid-template-columns: 1fr; }
-        }
-    </style>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js" defer></script>
+    <link href="styles.css" rel="stylesheet">
 </head>
 
 <body>
-
+    <div class="bg-gradient"></div>
+    <div class="orbs">
+        <div class="orb orb-1"></div>
+        <div class="orb orb-2"></div>
+        <div class="orb orb-3"></div>
+    </div>
     <header class="header">
-        <a href="#" class="logo">Supriya<span> Dey</span></a>
+        <a href="#home" class="logo">Supriya<span>.</span></a>
         <nav class="navbar">
-            <a href="#home" class="active">Home</a>
+            <a href="#home" class="active" aria-current="page">Home</a>
             <a href="#about">About</a>
             <a href="#skills">Skills</a>
             <a href="#project">Projects</a>
             <a href="#contact">Contact</a>
         </nav>
+        <div class="menu-toggle"><span></span><span></span><span></span></div>
     </header>
-
     <section class="home" id="home">
-        <div class="home-content reveal active"> <h3>Hi, I am</h3>
-            <h1>Supriya <span>Dey</span></h1>
-            <h3>Professional <span class="typing"></span></h3>
-            <p>I build robust, data-driven web applications like PGLife and automated management dashboards. Bridging the gap between complex mathematics and high-performance code.</p>
-            <div class="social-media">
-                <a href="https://www.linkedin.com/in/supriya-dey-1b4785352/"><i class='bx bxl-linkedin'></i></a>
-                <a href="https://github.com/Supriya-Dey805"><i class='bx bxl-github'></i></a>
+        <div class="home-content">
+            <p class="greeting">Hello, I'm</p>
+            <h1>Supriya <span class="name">Dey</span></h1>
+            <p class="role">Full Stack MERN Developer</p>
+            <p>I build scalable full-stack web applications with secure authentication,
+                REST APIs and real-world dashboards. Currently focused on DSA,
+                system design fundamentals and production-ready projects.</p>
+            <div class="cta-buttons">
+                <a href="#project" class="btn btn-primary">View Work <i class='bx bx-right-arrow-alt'></i></a>
+                <a href="RESUME LATEX.pdf" class="btn btn-secondary" target="_blank" rel="noopener noreferrer"><i class='bx bx-download'></i> Download
+                    Resume(PDF)</a>
             </div>
-            <a href="RESUME_.pdf" class="btn">View My Resume</a>
+            <div class="social-links">
+                <a href="https://www.linkedin.com/in/supriya-dey-1b4785352/" target="_blank" rel="noopener noreferrer"><i
+                        class='bx bxl-linkedin'></i></a>
+                <a href="https://github.com/Supriya-Dey805" target="_blank" rel="noopener noreferrer"><i class='bx bxl-github'></i></a>
+            </div>
         </div>
-        <div class="home-img reveal active">
-            <div class="glowing-circle">
-                <span></span>
-                <div class="image">
-                    <img src="IMG_20240811_203422.jpg" alt="Profile">
+        <div class="home-img">
+            <div class="profile-wrapper">
+                <div class="profile-decor">
+                    <div class="decor-circle"></div>
+                    <div class="decor-circle"></div>
+                </div>
+                <div class="profile-circle">
+                    <div class="profile-img"><img src="me.jpg" alt="Supriya Dey" loading="lazy"></div>
                 </div>
             </div>
         </div>
+        <div class="scroll-down"><span>Scroll</span>
+            <div class="scroll-line"></div>
+        </div>
     </section>
 
+    <section class="highlights reveal">
+        <h2 class="heading">Currently <span>Working On</span></h2>
+
+        <div class="highlights-container">
+            <div class="highlight-card">Solving Data Structures & Algorithms daily</div>
+            <div class="highlight-card">Learning Core CS: OS, DBMS, OOP</div>
+            <div class="highlight-card">Building production-ready MERN projects</div>
+            <div class="highlight-card">Preparing for Software Developer roles (2026)</div>
+        </div>
+    </section>
     <section class="about reveal" id="about">
-        <div class="about-img">
-            <img src="IMG_20240811_203422.jpg" alt="About">
-        </div>
-        <div class="about-content">
-            <h2 class="heading">About <span>Me</span></h2>
-            <h3>Full Stack Developer & Math Enthusiast</h3>
-            <p>I am a Full Stack Developer with a strong foundation in Mathematics, which allows me to approach coding with a focus on logic and algorithm efficiency. I specialize in building secure, data-driven applications using the MERN stack. My flagship projects include a comprehensive Attendance Management System featuring real-time tracking and PGLife, a multi-city property platform designed for a seamless user experience.</p>
-            <a href="#project" class="btn">View My Work</a>
+        <h2 class="heading">About <span>Me</span></h2>
+        <div class="about-container">
+            <div class="about-img">
+                <div class="about-img-inner"><img src="me.jpg" alt="About"></div>
+            </div>
+            <div class="about-content">
+                <h2>Full Stack Developer & <span>Math Enthusiast</span></h2>
+                <h3>I am a Computer Science student and Full Stack Developer focused on
+                    building real-world web applications using the MERN stack.</h3>
+                <p>I enjoy designing backend systems, creating REST APIs, and building
+                    responsive user interfaces. My goal is to become a Software Engineer
+                    and contribute to scalable products that solve real problems.</p>
+                <div class="about-stats">
+                    <div class="stat-item">
+                        <div class="number">3+</div>
+                        <div class="label">Projects</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="number">MERN</div>
+                        <div class="label">Stack</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="number">100%</div>
+                        <div class="label">Dedication</div>
+                    </div>
+                </div>
+                <a href="#project" class="btn btn-primary">View My Work <i class='bx bx-right-arrow-alt'></i></a>
+            </div>
         </div>
     </section>
-
     <section class="skills reveal" id="skills">
         <h2 class="heading">Tech <span>Stack</span></h2>
-        <div class="skills-main">
-            <div class="skills-column">
-                <div class="skill-bar"><div class="info"><p>HTML/CSS/JS</p><p>95%</p></div><div class="bar"><span style="width: 95%"></span></div></div>
-                <div class="skill-bar"><div class="info"><p>React.js / Node.js</p><p>85%</p></div><div class="bar"><span style="width: 85%"></span></div></div>
-                <div class="skill-bar"><div class="info"><p>Database (SQL/Mongo)</p><p>90%</p></div><div class="bar"><span style="width: 90%"></span></div></div>
+
+        <div class="skills-container">
+            <div class="skills-grid">
+
+                <!-- FRONTEND -->
+                <div class="skill-category">
+                    <h3>Frontend</h3>
+
+                    <div class="skill-item" style="--width: 95%">
+                        <div class="skill-info"><span>HTML / CSS / JavaScript</span><span>95%</span></div>
+                        <div class="skill-bar">
+                            <div class="skill-bar-fill"></div>
+                        </div>
+                    </div>
+
+                    <div class="skill-item" style="--width: 85%">
+                        <div class="skill-info"><span>React.js</span><span>85%</span></div>
+                        <div class="skill-bar">
+                            <div class="skill-bar-fill"></div>
+                        </div>
+                    </div>
+
+                    <div class="skill-item" style="--width: 80%">
+                        <div class="skill-info"><span>Responsive Design</span><span>80%</span></div>
+                        <div class="skill-bar">
+                            <div class="skill-bar-fill"></div>
+                        </div>
+                    </div>
+
+                    <div class="skill-item" style="--width: 75%">
+                        <div class="skill-info"><span>UI / UX Basics</span><span>75%</span></div>
+                        <div class="skill-bar">
+                            <div class="skill-bar-fill"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- BACKEND -->
+                <div class="skill-category">
+                    <h3>Backend</h3>
+
+                    <div class="skill-item" style="--width: 85%">
+                        <div class="skill-info"><span>Node.js</span><span>85%</span></div>
+                        <div class="skill-bar">
+                            <div class="skill-bar-fill"></div>
+                        </div>
+                    </div>
+
+                    <div class="skill-item" style="--width: 80%">
+                        <div class="skill-info"><span>Express.js</span><span>80%</span></div>
+                        <div class="skill-bar">
+                            <div class="skill-bar-fill"></div>
+                        </div>
+                    </div>
+
+                    <div class="skill-item" style="--width: 82%">
+                        <div class="skill-info"><span>REST APIs</span><span>82%</span></div>
+                        <div class="skill-bar">
+                            <div class="skill-bar-fill"></div>
+                        </div>
+                    </div>
+
+                    <div class="skill-item" style="--width: 78%">
+                        <div class="skill-info"><span>Authentication / JWT</span><span>78%</span></div>
+                        <div class="skill-bar">
+                            <div class="skill-bar-fill"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- DATABASE -->
+                <div class="skill-category">
+                    <h3>Database</h3>
+
+                    <div class="skill-item" style="--width: 85%">
+                        <div class="skill-info"><span>MongoDB</span><span>85%</span></div>
+                        <div class="skill-bar">
+                            <div class="skill-bar-fill"></div>
+                        </div>
+                    </div>
+
+                    <div class="skill-item" style="--width: 80%">
+                        <div class="skill-info"><span>Mongoose</span><span>80%</span></div>
+                        <div class="skill-bar">
+                            <div class="skill-bar-fill"></div>
+                        </div>
+                    </div>
+
+                    <div class="skill-item" style="--width: 75%">
+                        <div class="skill-info"><span>Database Design</span><span>75%</span></div>
+                        <div class="skill-bar">
+                            <div class="skill-bar-fill"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- PROGRAMMING & TOOLS -->
+                <div class="skill-category">
+                    <h3>Programming & Tools</h3>
+
+                    <div class="skill-item" style="--width: 75%">
+                        <div class="skill-info"><span>Python</span><span>75%</span></div>
+                        <div class="skill-bar">
+                            <div class="skill-bar-fill"></div>
+                        </div>
+                    </div>
+
+                    <div class="skill-item" style="--width: 70%">
+                        <div class="skill-info"><span>Data Structures & Algorithms</span><span>70%</span></div>
+                        <div class="skill-bar">
+                            <div class="skill-bar-fill"></div>
+                        </div>
+                    </div>
+
+                    <div class="skill-item" style="--width: 80%">
+                        <div class="skill-info"><span>Git & GitHub</span><span>80%</span></div>
+                        <div class="skill-bar">
+                            <div class="skill-bar-fill"></div>
+                        </div>
+                    </div>
+
+                    <div class="skill-item" style="--width: 78%">
+                        <div class="skill-info"><span>Postman / API Testing</span><span>78%</span></div>
+                        <div class="skill-bar">
+                            <div class="skill-bar-fill"></div>
+                        </div>
+                    </div>
+                </div>
+
             </div>
-            <div class="skills-column">
-                <div class="skill-bar"><div class="info"><p>Python / Java</p><p>80%</p></div><div class="bar"><span style="width: 80%"></span></div></div>
-                <div class="skill-bar"><div class="info"><p>UI/UX Design</p><p>88%</p></div><div class="bar"><span style="width: 88%"></span></div></div>
-                <div class="skill-bar"><div class="info"><p>Problem Solving</p><p>95%</p></div><div class="bar"><span style="width: 95%"></span></div></div>
-            </div>
+        </div>
+    </section>
+
+    <section class="highlights reveal" id="highlights">
+        <h2 class="heading">Tech <span>Highlights</span></h2>
+
+        <div class="highlights-container">
+            <div class="highlight-card">Built 5+ full-stack MERN applications</div>
+            <div class="highlight-card">Designed REST APIs with authentication & authorization</div>
+            <div class="highlight-card">Experience with MongoDB schema design</div>
+            <div class="highlight-card">Version control using Git & GitHub</div>
+            <div class="highlight-card">API testing using Postman</div>
         </div>
     </section>
 
     <section class="projects reveal" id="project">
         <h2 class="heading">Latest <span>Projects</span></h2>
-        <div class="portfolio-container">
-            <div class="portfolio-box">
-                <img src="PG LIFE.png" alt="PGLife">
-                <div class="portfolio-layer">
-                    <h4>PGLife</h4>
-                    <p>A full-stack property portal for students with filtered city searches and amenity tracking.</p>
-                    <a href="https://github.com/Supriya-Dey805/PG_LIFE"><i class='bx bx-link-external'></i></a>
+
+        <div class="projects-grid">
+
+            <!-- Project 1 -->
+            <div class="project-card">
+                <div class="project-image">
+                    <img src="PG LIFE.png" alt="PGLife Project Screenshot" loading="lazy">
+                </div>
+                <div class="project-content">
+                    <h3>PGLife</h3>
+                    <p>Full-stack web application that helps students discover PG accommodations with city-based
+                        filtering, property listings, and secure backend data handling.</p>
+                    <div class="project-tags">
+                        <span>React</span><span>Node.js</span><span>Express</span><span>MongoDB</span><span>REST
+                            API</span><span>JWT Auth</span>
+                    </div>
+                    <div style="display:flex; gap:12px;">
+                        <a href="https://github.com/Supriya-Dey805/PG_LIFE" target="_blank" rel="noopener noreferrer" class="project-link">GitHub</a>
+                    </div>
                 </div>
             </div>
-            <div class="portfolio-box">
-                <img src="EMP.png" alt="Attendance">
-                <div class="portfolio-layer">
-                    <h4>Attendance System</h4>
-                    <p>Dashboard for real-time employee management, check-in tracking, and reporting.</p>
-                    <a href="https://drive.google.com/file/d/1jYjo_pzAoaFC-2RasyskOuEJ5DsScktY/view?usp=sharing" target="_blank"><i class='bx bx-play-circle'></i></a>
+
+            <!-- Project 3 -->
+            <div class="project-card">
+                <div class="project-image">
+                    <img src="CMS.png" alt="Content Management System Screenshot" loading="lazy">
+                </div>
+                <div class="project-content">
+                    <h3>Content Management System</h3>
+                    <p>Backend-driven CMS that allows creation, editing, and structured management of digital content
+                        with database integration.</p>
+                    <div class="project-tags">
+                        <span>Node.js</span><span>Express</span><span>MongoDB</span><span>REST
+                            API</span><span>CRUD</span><span>Backend</span>
+                    </div>
+                    <div style="display:flex; gap:12px;">
+                        <a href="https://github.com/Supriya-Dey805/Content-Management-System" target="_blank" rel="noopener noreferrer"
+                            class="project-link">GitHub</a>
+                    </div>
                 </div>
             </div>
-            <div class="portfolio-box">
-                <img src="sam-project.jpg" alt="Content Management System">
-                <div class="portfolio-layer">
-                    <h4>Content Management System </h4>
-                    <p>Analytical mirror for student feedback and performance tracking using data logic.</p>
-                    <a href="#"><i class='bx bx-link-external'></i></a>
+
+            <!-- Project 4 -->
+            <div class="project-card">
+                <div class="project-image">
+                    <img src="e-comm.png" alt="E-commerce App Screenshot" loading="lazy">
+                </div>
+                <div class="project-content">
+                    <h3>E-Commerce Web App</h3>
+                    <p>Full-stack e-commerce platform with product browsing, cart system, user authentication, and
+                        secure checkout workflow.</p>
+                    <div class="project-tags">
+                        <span>React</span><span>Node.js</span><span>Express</span><span>MongoDB</span><span>JWT
+                            Auth</span><span>Stripe</span>
+                    </div>
+                    <div style="display:flex; gap:12px;">
+                        <a href="https://github.com/Supriya-Dey805/E-comm" target="_blank" rel="noopener noreferrer"
+                            class="project-link">GitHub</a>
+                    </div>
                 </div>
             </div>
+
+            <!-- Project 5 -->
+            <div class="project-card">
+                <div class="project-image">
+                    <img src="social-media.png" alt="Social Media App Screenshot" loading="lazy">
+                </div>
+                <div class="project-content">
+                    <h3>Social Media App</h3>
+                    <p>Full-stack social platform where users can create profiles, share posts, like, comment, and
+                        connect with others.</p>
+                    <div class="project-tags">
+                        <span>React</span><span>Node.js</span><span>Express</span><span>MongoDB</span><span>REST
+                            API</span><span>Authentication</span>
+                    </div>
+                    <div style="display:flex; gap:12px;">
+                        
+                        <a href="https://github.com/Supriya-Dey805/social_media_app" target="_blank" rel="noopener noreferrer"
+                            class="project-link">GitHub</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Project 6 -->
+<div class="project-card">
+    <div class="project-image">
+        <img src="blogsphere.png" alt="BlogSphere Screenshot" loading="lazy">
+    </div>
+
+    <div class="project-content">
+        <h3>BlogSphere</h3>
+
+        <p>
+            Advanced full-stack blogging platform with secure authentication,
+            blog creation and editing, likes, comments, bookmarks, search,
+            trending posts, featured blogs, and dark mode support.
+        </p>
+
+        <div class="project-tags">
+            <span>MongoDB</span>
+            <span>Express.js</span>
+            <span>React.js</span>
+            <span>Node.js</span>
+            <span>JWT Auth</span>
+            <span>REST API</span>
+        </div>
+
+        <div style="display:flex; gap:12px;">
+
+            <a href="https://github.com/Supriya-Dey805/Simple_blog-System-" target="_blank" rel="noopener noreferrer" class="project-link">
+                GitHub
+            </a>
+        </div>
+    </div>
+</div>
+
         </div>
     </section>
-
     <section class="contact reveal" id="contact">
-        <h2 class="heading">Contact <span>Me!</span></h2>
-        <form action="#">
-            <div class="input-box">
-                <input type="text" placeholder="Full Name">
-                <input type="email" placeholder="Email Address">
-            </div>
-            <div class="input-box">
-                <input type="number" placeholder="Mobile Number">
-                <input type="text" placeholder="Email Subject">
-            </div>
-            <textarea cols="30" rows="10" placeholder="Your Message"></textarea>
-            <input type="submit" value="Send Message" class="btn">
-        </form>
-    </section>
+        <h2 class="heading">Get In <span>Touch</span></h2>
+        <div class="contact-container">
+            <p>Open to internships and full-time opportunities.</p>
 
-    <footer class="footer">
-        <div class="footer-text">
-            <p>Copyright &copy; 2025 by Supriya Dey | All Rights Reserved.</p>
+            <p style="margin-bottom:20px;">Email:supriyadey769@outlook.com </p>
+
+            <form class="contact-form" aria-label="Contact form" novalidate>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="contact-name">Your Name</label>
+                        <input id="contact-name" type="text" name="from_name" placeholder="Your Name" required aria-required="true">
+                    </div>
+                    <div class="form-group">
+                        <label for="contact-email">Your Email</label>
+                        <input id="contact-email" type="email" name="from_email" placeholder="Your Email" required aria-required="true">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="contact-subject">Subject</label>
+                    <input id="contact-subject" type="text" name="subject" placeholder="Subject" required aria-required="true">
+                </div>
+                <div class="form-group">
+                    <label for="contact-message">Your Message</label>
+                    <textarea id="contact-message" name="message" placeholder="Your Message" required aria-required="true"></textarea>
+                </div>
+                <div class="form-status" aria-live="polite"></div>
+                <button type="submit" class="submit-btn">Send Message <i class='bx bx-send'></i></button>
+            </form>
         </div>
-        <div class="footer-iconTop">
-            <a href="#home"><i class='bx bx-up-arrow-alt'></i></a>
+    </section>
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-left">
+                <p class="footer-name">Supriya Dey</p>
+                <p class="footer-tag">Full Stack Developer • MERN Stack</p>
+            </div>
+
+            <div class="footer-social">
+                <a href="https://www.linkedin.com/in/supriya-dey-1b4785352/" target="_blank" rel="noopener noreferrer">
+                    <i class='bx bxl-linkedin'></i>
+                </a>
+                <a href="https://github.com/Supriya-Dey805" target="_blank" rel="noopener noreferrer">
+                    <i class='bx bxl-github'></i>
+                </a>
+            </div>
+        </div>
+
+        <div class="footer-bottom">
+            <p>© 2026 Supriya Dey. All rights reserved.</p>
         </div>
     </footer>
+    <script defer>
+        // EmailJS init
+        if (window.emailjs && typeof emailjs.init === 'function') {
+            emailjs.init("y8qmeNk3819eAaIRd");
+        } else {
+            console.warn('EmailJS library is not loaded. Contact form will be disabled.');
+        }
 
-    <script src="https://unpkg.com/typed.js@2.1.0/dist/typed.umd.js"></script>
-    <script>
-        // Typing Animation
-        var typed = new Typed(".typing", {
-            strings: ["Full Stack Developer", "Software Engineer", "UI Designer"],
-            typeSpeed: 70, backSpeed: 40, loop: true
-        });
-
-        // Scroll Reveal Function
+        // Existing animations
         function reveal() {
-            var reveals = document.querySelectorAll(".reveal");
-            for (var i = 0; i < reveals.length; i++) {
-                var windowHeight = window.innerHeight;
-                var elementTop = reveals[i].getBoundingClientRect().top;
-                var elementVisible = 150;
-                if (elementTop < windowHeight - elementVisible) {
-                    reveals[i].classList.add("active");
-                }
+            document.querySelectorAll('.reveal').forEach(function (el) { 
+                if (el.getBoundingClientRect().top < window.innerHeight - 100) el.classList.add('active'); 
+            });
+            document.querySelectorAll('.skill-item').forEach(function (el) { 
+                if (el.getBoundingClientRect().top < window.innerHeight - 100) el.classList.add('visible'); 
+            });
+            document.querySelectorAll('.project-card').forEach(function (el, i) { 
+                if (el.getBoundingClientRect().top < window.innerHeight - 100) setTimeout(function () { el.classList.add('visible'); }, i * 150); 
+            });
+            const contactForm = document.querySelector('.contact-form');
+            if (contactForm && contactForm.getBoundingClientRect().top < window.innerHeight - 100) {
+                contactForm.classList.add('visible');
             }
         }
 
-        window.addEventListener("scroll", reveal);
+        // Navbar smooth scroll & active link
+        const navLinks = Array.from(document.querySelectorAll('.navbar a'));
+        const sections = navLinks
+            .map(link => document.querySelector(link.getAttribute('href')))
+            .filter(Boolean);
 
-        // Sticky Header Active Link
-        let sections = document.querySelectorAll('section');
-        let navLinks = document.querySelectorAll('header nav a');
+        function updateActiveNavLink() {
+            const offset = window.innerHeight / 3;
+            let currentSection = sections[0];
 
-        window.onscroll = () => {
-            reveal(); // Trigger reveal on scroll
-            sections.forEach(sec => {
-                let top = window.scrollY;
-                let offset = sec.offsetTop - 150;
-                let height = sec.offsetHeight;
-                let id = sec.getAttribute('id');
-                if(top >= offset && top < offset + height) {
-                    navLinks.forEach(links => {
-                        links.classList.remove('active');
-                        document.querySelector('header nav a[href*=' + id + ']').classList.add('active');
-                    });
+            sections.forEach(section => {
+                const rect = section.getBoundingClientRect();
+                if (rect.top <= offset) {
+                    currentSection = section;
                 }
             });
-        };
+
+            const activeLink = document.querySelector('.navbar a.active');
+            if (activeLink) {
+                activeLink.classList.remove('active');
+                activeLink.removeAttribute('aria-current');
+            }
+            const newActiveLink = document.querySelector(`.navbar a[href="#${currentSection.id}"]`);
+            if (newActiveLink) {
+                newActiveLink.classList.add('active');
+                newActiveLink.setAttribute('aria-current', 'page');
+            }
+        }
+
+        document.querySelectorAll('.navbar a').forEach(link => {
+            link.addEventListener('click', (e) => {
+                e.preventDefault();
+                const target = document.querySelector(link.getAttribute('href'));
+                if (target) target.scrollIntoView({ behavior: 'smooth' });
+                document.querySelector('.navbar').classList.remove('active');
+                document.querySelector('.menu-toggle').classList.remove('active');
+                const activeLink = document.querySelector('.navbar a.active');
+                if (activeLink) {
+                    activeLink.classList.remove('active');
+                    activeLink.removeAttribute('aria-current');
+                }
+                link.classList.add('active');
+                link.setAttribute('aria-current', 'page');
+            });
+        });
+
+        // Mobile menu toggle
+        document.querySelector('.menu-toggle').addEventListener('click', function () { 
+            this.classList.toggle('active'); 
+            document.querySelector('.navbar').classList.toggle('active'); 
+        });
+
+        // Header scroll effect
+        window.addEventListener('scroll', function () { 
+            document.querySelector('.header').classList.toggle('scrolled', window.scrollY > 50); 
+            reveal(); 
+            updateActiveNavLink();
+        });
+
+        // Contact form handler
+        document.querySelector('.contact-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const submitBtn = document.querySelector('.submit-btn');
+            const originalText = submitBtn.innerHTML;
+            const statusEl = document.querySelector('.form-status');
+
+            function setStatus(message, type = '') {
+                if (statusEl) {
+                    statusEl.textContent = message;
+                    statusEl.className = 'form-status' + (type ? ` ${type}` : '');
+                }
+            }
+
+            submitBtn.innerHTML = '<i class="bx bx-loader-alt bx-spin"></i> Sending...';
+            submitBtn.disabled = true;
+            setStatus('Sending your message...');
+
+            if (!window.emailjs || typeof emailjs.sendForm !== 'function') {
+                setStatus('Email service is unavailable. Please try again later or use direct email: supriyadey769@outlook.com', 'error');
+                submitBtn.innerHTML = originalText;
+                submitBtn.disabled = false;
+                return;
+            }
+
+            emailjs.sendForm('service_fo65jwd', 'template_c0dv8gi', this)
+                .then((response) => {
+                    setStatus('Message sent successfully! Thank you for contacting me. I\'ll respond soon.', 'success');
+                    this.reset();
+                }, (error) => {
+                    console.error('EmailJS error:', error);
+                    const errorText = error.text || error || 'Unable to send message.';
+                    setStatus(`Failed to send: ${errorText}. Try direct email: supriyadey769@outlook.com`, 'error');
+                })
+                .finally(() => {
+                    submitBtn.innerHTML = originalText;
+                    submitBtn.disabled = false;
+                });
+        });
+
+        // Initial reveal
+        reveal();
+        updateActiveNavLink();
     </script>
+
 </body>
+
 </html>
