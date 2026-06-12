@@ -7,7 +7,7 @@
     <title>Supriya Dey | Portfolio</title>
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
     <link href="styles.css" rel="stylesheet">
 </head>
 
@@ -424,134 +424,152 @@
             <p>© 2026 Supriya Dey. All rights reserved.</p>
         </div>
     </footer>
-    <script defer>
-        // EmailJS init
-        if (window.emailjs && typeof emailjs.init === 'function') {
-            emailjs.init("y8qmeNk3819eAaIRd");
-        } else {
-            console.warn('EmailJS library is not loaded. Contact form will be disabled.');
-        }
+<script>
+window.onload = function () {
 
-        // Existing animations
-        function reveal() {
-            document.querySelectorAll('.reveal').forEach(function (el) { 
-                if (el.getBoundingClientRect().top < window.innerHeight - 100) el.classList.add('active'); 
-            });
-            document.querySelectorAll('.skill-item').forEach(function (el) { 
-                if (el.getBoundingClientRect().top < window.innerHeight - 100) el.classList.add('visible'); 
-            });
-            document.querySelectorAll('.project-card').forEach(function (el, i) { 
-                if (el.getBoundingClientRect().top < window.innerHeight - 100) setTimeout(function () { el.classList.add('visible'); }, i * 150); 
-            });
-            const contactForm = document.querySelector('.contact-form');
-            if (contactForm && contactForm.getBoundingClientRect().top < window.innerHeight - 100) {
-                contactForm.classList.add('visible');
+    // EmailJS init
+    emailjs.init("y8qmeNk3819eAaIRd");
+
+    // Reveal animation
+    function reveal() {
+        document.querySelectorAll('.reveal').forEach(function(el) {
+            if (el.getBoundingClientRect().top < window.innerHeight - 100) {
+                el.classList.add('active');
             }
+        });
+
+        document.querySelectorAll('.skill-item').forEach(function(el) {
+            if (el.getBoundingClientRect().top < window.innerHeight - 100) {
+                el.classList.add('visible');
+            }
+        });
+
+        document.querySelectorAll('.project-card').forEach(function(el, i) {
+            if (el.getBoundingClientRect().top < window.innerHeight - 100) {
+                setTimeout(function() {
+                    el.classList.add('visible');
+                }, i * 150);
+            }
+        });
+
+        const contactForm = document.querySelector('.contact-form');
+        if (contactForm && contactForm.getBoundingClientRect().top < window.innerHeight - 100) {
+            contactForm.classList.add('visible');
+        }
+    }
+
+    // Navbar active links
+    const navLinks = Array.from(document.querySelectorAll('.navbar a'));
+    const sections = navLinks
+        .map(function(link) {
+            return document.querySelector(link.getAttribute('href'));
+        })
+        .filter(Boolean);
+
+    function updateActiveNavLink() {
+        const offset = window.innerHeight / 3;
+        let currentSection = sections[0];
+
+        sections.forEach(function(section) {
+            const rect = section.getBoundingClientRect();
+            if (rect.top <= offset) {
+                currentSection = section;
+            }
+        });
+
+        const activeLink = document.querySelector('.navbar a.active');
+        if (activeLink) {
+            activeLink.classList.remove('active');
+            activeLink.removeAttribute('aria-current');
         }
 
-        // Navbar smooth scroll & active link
-        const navLinks = Array.from(document.querySelectorAll('.navbar a'));
-        const sections = navLinks
-            .map(link => document.querySelector(link.getAttribute('href')))
-            .filter(Boolean);
+        const newActiveLink = document.querySelector('.navbar a[href="#' + currentSection.id + '"]');
+        if (newActiveLink) {
+            newActiveLink.classList.add('active');
+            newActiveLink.setAttribute('aria-current', 'page');
+        }
+    }
 
-        function updateActiveNavLink() {
-            const offset = window.innerHeight / 3;
-            let currentSection = sections[0];
+    // Smooth scroll
+    document.querySelectorAll('.navbar a').forEach(function(link) {
+        link.addEventListener('click', function(e) {
+            e.preventDefault();
 
-            sections.forEach(section => {
-                const rect = section.getBoundingClientRect();
-                if (rect.top <= offset) {
-                    currentSection = section;
-                }
-            });
+            const target = document.querySelector(link.getAttribute('href'));
+            if (target) {
+                target.scrollIntoView({
+                    behavior: 'smooth'
+                });
+            }
+
+            document.querySelector('.navbar').classList.remove('active');
+            document.querySelector('.menu-toggle').classList.remove('active');
 
             const activeLink = document.querySelector('.navbar a.active');
             if (activeLink) {
                 activeLink.classList.remove('active');
                 activeLink.removeAttribute('aria-current');
             }
-            const newActiveLink = document.querySelector(`.navbar a[href="#${currentSection.id}"]`);
-            if (newActiveLink) {
-                newActiveLink.classList.add('active');
-                newActiveLink.setAttribute('aria-current', 'page');
-            }
-        }
 
-        document.querySelectorAll('.navbar a').forEach(link => {
-            link.addEventListener('click', (e) => {
-                e.preventDefault();
-                const target = document.querySelector(link.getAttribute('href'));
-                if (target) target.scrollIntoView({ behavior: 'smooth' });
-                document.querySelector('.navbar').classList.remove('active');
-                document.querySelector('.menu-toggle').classList.remove('active');
-                const activeLink = document.querySelector('.navbar a.active');
-                if (activeLink) {
-                    activeLink.classList.remove('active');
-                    activeLink.removeAttribute('aria-current');
-                }
-                link.classList.add('active');
-                link.setAttribute('aria-current', 'page');
-            });
+            link.classList.add('active');
+            link.setAttribute('aria-current', 'page');
         });
+    });
 
-        // Mobile menu toggle
-        document.querySelector('.menu-toggle').addEventListener('click', function () { 
-            this.classList.toggle('active'); 
-            document.querySelector('.navbar').classList.toggle('active'); 
-        });
+    // Mobile menu
+    document.querySelector('.menu-toggle').addEventListener('click', function() {
+        this.classList.toggle('active');
+        document.querySelector('.navbar').classList.toggle('active');
+    });
 
-        // Header scroll effect
-        window.addEventListener('scroll', function () { 
-            document.querySelector('.header').classList.toggle('scrolled', window.scrollY > 50); 
-            reveal(); 
-            updateActiveNavLink();
-        });
-
-        // Contact form handler
-        document.querySelector('.contact-form').addEventListener('submit', function(e) {
-            e.preventDefault();
-            const submitBtn = document.querySelector('.submit-btn');
-            const originalText = submitBtn.innerHTML;
-            const statusEl = document.querySelector('.form-status');
-
-            function setStatus(message, type = '') {
-                if (statusEl) {
-                    statusEl.textContent = message;
-                    statusEl.className = 'form-status' + (type ? ` ${type}` : '');
-                }
-            }
-
-            submitBtn.innerHTML = '<i class="bx bx-loader-alt bx-spin"></i> Sending...';
-            submitBtn.disabled = true;
-            setStatus('Sending your message...');
-
-            if (!window.emailjs || typeof emailjs.sendForm !== 'function') {
-                setStatus('Email service is unavailable. Please try again later or use direct email: supriyadey769@outlook.com', 'error');
-                submitBtn.innerHTML = originalText;
-                submitBtn.disabled = false;
-                return;
-            }
-
-            emailjs.sendForm('service_fo65jwd', 'template_c0dv8gi', this)
-                .then((response) => {
-                    setStatus('Message sent successfully! Thank you for contacting me. I\'ll respond soon.', 'success');
-                    this.reset();
-                }, (error) => {
-                    console.error('EmailJS error:', error);
-                    const errorText = error.text || error || 'Unable to send message.';
-                    setStatus(`Failed to send: ${errorText}. Try direct email: supriyadey769@outlook.com`, 'error');
-                })
-                .finally(() => {
-                    submitBtn.innerHTML = originalText;
-                    submitBtn.disabled = false;
-                });
-        });
-
-        // Initial reveal
+    // Scroll effects
+    window.addEventListener('scroll', function() {
+        document.querySelector('.header').classList.toggle('scrolled', window.scrollY > 50);
         reveal();
         updateActiveNavLink();
-    </script>
+    });
+
+    // Contact form
+    document.querySelector('.contact-form').addEventListener('submit', function(e) {
+        e.preventDefault();
+
+        const submitBtn = document.querySelector('.submit-btn');
+        const originalText = submitBtn.innerHTML;
+        const statusEl = document.querySelector('.form-status');
+
+        function setStatus(message, type) {
+            statusEl.textContent = message;
+            statusEl.className = 'form-status ' + (type || '');
+        }
+
+        submitBtn.innerHTML = '<i class="bx bx-loader-alt bx-spin"></i> Sending...';
+        submitBtn.disabled = true;
+
+        setStatus('Sending your message...');
+
+        emailjs.sendForm(
+            'service_fo65jwd',
+            'template_c0dv8gi',
+            this
+        )
+        .then(function() {
+            setStatus('Message sent successfully!', 'success');
+            document.querySelector('.contact-form').reset();
+        })
+        .catch(function(error) {
+            console.log(error);
+            setStatus('Failed to send. Please try again.', 'error');
+        })
+        .finally(function() {
+            submitBtn.innerHTML = originalText;
+            submitBtn.disabled = false;
+        });
+    });
+
+    reveal();
+    updateActiveNavLink();
+};
+</script>
 
 </body>
 
