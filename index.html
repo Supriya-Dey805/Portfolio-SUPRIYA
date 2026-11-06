@@ -39,7 +39,7 @@
                 system design fundamentals and production-ready projects.</p>
             <div class="cta-buttons">
                 <a href="#project" class="btn btn-primary">View Work <i class='bx bx-right-arrow-alt'></i></a>
-                <a href="RESUME LATEX.pdf" class="btn btn-secondary" target="_blank" rel="noopener noreferrer"><i class='bx bx-download'></i> Download
+                <a href="SUPRIYA_RESUME.pdf" class="btn btn-secondary" target="_blank" rel="noopener noreferrer"><i class='bx bx-download'></i> Download
                     Resume(PDF)</a>
             </div>
             <div class="social-links">
@@ -370,6 +370,33 @@
     </div>
 </div>
 
+<div class="project-card">
+    <div class="project-image">
+        <img src="MOVIE_DISCOVERY.png" alt="Movie Discovery App">
+    </div>
+
+    <div class="project-content">
+        <h3>Movie Discovery App</h3>
+
+        <p>
+            Movie discovery platform that allows users to
+            search, explore trending movies, view ratings
+            and discover films through an intuitive interface.
+        </p>
+
+        <div class="project-tags">
+            <span>React.js</span>
+            <span>JavaScript</span>
+            <span>CSS</span>
+            <span>REST API</span>
+        </div>
+
+        <a href="https://github.com/Supriya-Dey805/Movie-Discovery-App" target="_blank" rel="noopener noreferrer" class="project-link">
+            GitHub
+        </a>
+    </div>
+</div>
+
         </div>
     </section>
     <section class="contact reveal" id="contact">
@@ -424,7 +451,609 @@
             <p>© 2026 Supriya Dey. All rights reserved.</p>
         </div>
     </footer>
-<script>
+    <script>
+window.onload = function () {
+
+    // EmailJS init
+    emailjs.init("y8qmeNk3819eAaIRd");
+
+    // Reveal animation
+    function reveal() {
+        document.querySelectorAll('.reveal').forEach(function(el) {
+            if (el.getBoundingClientRect().top < window.innerHeight - 100) {
+                el.classList.add('active');
+            }
+        });
+
+        document.querySelectorAll('.skill-item').forEach(function(el) {
+            if (el.getBoundingClientRect().top < window.innerHeight - 100) {
+                el.classList.add('visible');
+            }
+        });
+
+        document.querySelectorAll('.project-card').forEach(function(el, i) {
+            if (el.getBoundingClientRect().top < window.innerHeight - 100) {
+                setTimeout(function() {
+                    el.classList.add('visible');
+                }, i * 150);
+            }
+        });
+
+        const contactForm = document.querySelector('.contact-form');
+        if (contactForm && contactForm.getBoundingClientRect().top < window.innerHeight - 100) {
+            contactForm.classList.add('visible');
+        }
+    }
+
+    // Navbar active links
+    const navLinks = Array.from(document.querySelectorAll('.navbar a'));
+    const sections = navLinks
+        .map(function(link) {
+            return document.querySelector(link.getAttribute('href'));
+        })
+        .filter(Boolean);
+
+    function updateActiveNavLink() {
+        const offset = window.innerHeight / 3;
+        let currentSection = sections[0];
+
+        sections.forEach(function(section) {
+            const rect = section.getBoundingClientRect();
+            if (rect.top <= offset) {
+                currentSection = section;
+            }
+        });
+
+        const activeLink = document.querySelector('.navbar a.active');
+        if (activeLink) {
+            activeLink.classList.remove('active');
+            activeLink.removeAttribute('aria-current');
+        }
+
+        const newActiveLink = document.querySelector('.navbar a[href="#' + currentSection.id + '"]');
+        if (newActiveLink) {
+            newActiveLink.classList.add('active');
+            newActiveLink.setAttribute('aria-current', 'page');
+        }
+    }
+
+    // Smooth scroll
+    document.querySelectorAll('.navbar a').forEach(function(link) {
+        link.addEventListener('click', function(e) {
+            e.preventDefault();
+
+            const target = document.querySelector(link.getAttribute('href'));
+            if (target) {
+                target.scrollIntoView({
+                    behavior: 'smooth'
+                });
+            }
+
+            document.querySelector('.navbar').classList.remove('active');
+            document.querySelector('.menu-toggle').classList.remove('active');
+
+            const activeLink = document.querySelector('.navbar a.active');
+            if (activeLink) {
+                activeLink.classList.remove('active');
+                activeLink.removeAttribute('aria-current');
+            }
+
+            link.classList.add('active');
+            link.setAttribute('aria-current', 'page');
+        });
+    });
+
+    // Mobile menu
+    document.querySelector('.menu-toggle').addEventListener('click', function() {
+        this.classList.toggle('active');
+        document.querySelector('.navbar').classList.toggle('active');
+    });
+
+    // Scroll effects
+    window.addEventListener('scroll', function() {
+        document.querySelector('.header').classList.toggle('scrolled', window.scrollY > 50);
+        reveal();
+        updateActiveNavLink();
+    });
+
+    // Contact form
+    document.querySelector('.contact-form').addEventListener('submit', function(e) {
+        e.preventDefault();
+
+        const submitBtn = document.querySelector('.submit-btn');
+        const originalText = submitBtn.innerHTML;
+        const statusEl = document.querySelector('.form-status');
+
+        function setStatus(message, type) {
+            statusEl.textContent = message;
+            statusEl.className = 'form-status ' + (type || '');
+        }
+
+        submitBtn.innerHTML = '<i class="bx bx-loader-alt bx-spin"></i> Sending...';
+        submitBtn.disabled = true;
+
+        setStatus('Sending your message...');
+
+        emailjs.sendForm(
+            'service_fo65jwd',
+            'template_c0dv8gi',
+            this
+        )
+        .then(function() {
+            setStatus('Message sent successfully!', 'success');
+            document.querySelector('.contact-form').reset();
+        })
+        .catch(function(error) {
+            console.log(error);
+            setStatus('Failed to send. Please try again.', 'error');
+        })
+        .finally(function() {
+            submitBtn.innerHTML = originalText;
+            submitBtn.disabled = false;
+        });
+    });
+
+    reveal();
+    updateActiveNavLink();
+};
+</script>
+
+</body>
+
+</html><!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Supriya Dey | Portfolio</title>
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+    <link href="styles.css" rel="stylesheet">
+</head>
+
+<body>
+    <div class="bg-gradient"></div>
+    <div class="orbs">
+        <div class="orb orb-1"></div>
+        <div class="orb orb-2"></div>
+        <div class="orb orb-3"></div>
+    </div>
+    <header class="header">
+        <a href="#home" class="logo">Supriya<span>.</span></a>
+        <nav class="navbar">
+            <a href="#home" class="active" aria-current="page">Home</a>
+            <a href="#about">About</a>
+            <a href="#skills">Skills</a>
+            <a href="#project">Projects</a>
+            <a href="#contact">Contact</a>
+        </nav>
+        <div class="menu-toggle"><span></span><span></span><span></span></div>
+    </header>
+    <section class="home" id="home">
+        <div class="home-content">
+            <p class="greeting">Hello, I'm</p>
+            <h1>Supriya <span class="name">Dey</span></h1>
+            <p class="role">Full Stack MERN Developer</p>
+            <p>I build scalable full-stack web applications with secure authentication,
+                REST APIs and real-world dashboards. Currently focused on DSA,
+                system design fundamentals and production-ready projects.</p>
+            <div class="cta-buttons">
+                <a href="#project" class="btn btn-primary">View Work <i class='bx bx-right-arrow-alt'></i></a>
+                <a href="SUPRIYA_RESUME.pdf" class="btn btn-secondary" target="_blank" rel="noopener noreferrer"><i class='bx bx-download'></i> Download
+                    Resume(PDF)</a>
+            </div>
+            <div class="social-links">
+                <a href="https://www.linkedin.com/in/supriya-dey-1b4785352/" target="_blank" rel="noopener noreferrer"><i
+                        class='bx bxl-linkedin'></i></a>
+                <a href="https://github.com/Supriya-Dey805" target="_blank" rel="noopener noreferrer"><i class='bx bxl-github'></i></a>
+            </div>
+        </div>
+        <div class="home-img">
+            <div class="profile-wrapper">
+                <div class="profile-decor">
+                    <div class="decor-circle"></div>
+                    <div class="decor-circle"></div>
+                </div>
+                <div class="profile-circle">
+                    <div class="profile-img"><img src="me.JPG" alt="Supriya Dey" loading="lazy"></div>
+                </div>
+            </div>
+        </div>
+        <div class="scroll-down"><span>Scroll</span>
+            <div class="scroll-line"></div>
+        </div>
+    </section>
+
+    <section class="highlights reveal">
+        <h2 class="heading">Currently <span>Working On</span></h2>
+
+        <div class="highlights-container">
+            <div class="highlight-card">Solving Data Structures & Algorithms daily</div>
+            <div class="highlight-card">Learning Core CS: OS, DBMS, OOP</div>
+            <div class="highlight-card">Building production-ready MERN projects</div>
+            <div class="highlight-card">Preparing for Software Developer roles (2026)</div>
+        </div>
+    </section>
+    <section class="about reveal" id="about">
+        <h2 class="heading">About <span>Me</span></h2>
+        <div class="about-container">
+            <div class="about-img">
+                <div class="about-img-inner"><img src="me.JPG" alt="About"></div>
+            </div>
+            <div class="about-content">
+                <h2>Full Stack Developer & <span>Math Enthusiast</span></h2>
+                <h3>I am a Computer Science student and Full Stack Developer focused on
+                    building real-world web applications using the MERN stack.</h3>
+                <p>I enjoy designing backend systems, creating REST APIs, and building
+                    responsive user interfaces. My goal is to become a Software Engineer
+                    and contribute to scalable products that solve real problems.</p>
+                <div class="about-stats">
+                    <div class="stat-item">
+                        <div class="number">3+</div>
+                        <div class="label">Projects</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="number">MERN</div>
+                        <div class="label">Stack</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="number">100%</div>
+                        <div class="label">Dedication</div>
+                    </div>
+                </div>
+                <a href="#project" class="btn btn-primary">View My Work <i class='bx bx-right-arrow-alt'></i></a>
+            </div>
+        </div>
+    </section>
+    <section class="skills reveal" id="skills">
+        <h2 class="heading">Tech <span>Stack</span></h2>
+
+        <div class="skills-container">
+            <div class="skills-grid">
+
+                <!-- FRONTEND -->
+                <div class="skill-category">
+                    <h3>Frontend</h3>
+
+                    <div class="skill-item" style="--width: 95%">
+                        <div class="skill-info"><span>HTML / CSS / JavaScript</span><span>95%</span></div>
+                        <div class="skill-bar">
+                            <div class="skill-bar-fill"></div>
+                        </div>
+                    </div>
+
+                    <div class="skill-item" style="--width: 85%">
+                        <div class="skill-info"><span>React.js</span><span>85%</span></div>
+                        <div class="skill-bar">
+                            <div class="skill-bar-fill"></div>
+                        </div>
+                    </div>
+
+                    <div class="skill-item" style="--width: 80%">
+                        <div class="skill-info"><span>Responsive Design</span><span>80%</span></div>
+                        <div class="skill-bar">
+                            <div class="skill-bar-fill"></div>
+                        </div>
+                    </div>
+
+                    <div class="skill-item" style="--width: 75%">
+                        <div class="skill-info"><span>UI / UX Basics</span><span>75%</span></div>
+                        <div class="skill-bar">
+                            <div class="skill-bar-fill"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- BACKEND -->
+                <div class="skill-category">
+                    <h3>Backend</h3>
+
+                    <div class="skill-item" style="--width: 85%">
+                        <div class="skill-info"><span>Node.js</span><span>85%</span></div>
+                        <div class="skill-bar">
+                            <div class="skill-bar-fill"></div>
+                        </div>
+                    </div>
+
+                    <div class="skill-item" style="--width: 80%">
+                        <div class="skill-info"><span>Express.js</span><span>80%</span></div>
+                        <div class="skill-bar">
+                            <div class="skill-bar-fill"></div>
+                        </div>
+                    </div>
+
+                    <div class="skill-item" style="--width: 82%">
+                        <div class="skill-info"><span>REST APIs</span><span>82%</span></div>
+                        <div class="skill-bar">
+                            <div class="skill-bar-fill"></div>
+                        </div>
+                    </div>
+
+                    <div class="skill-item" style="--width: 78%">
+                        <div class="skill-info"><span>Authentication / JWT</span><span>78%</span></div>
+                        <div class="skill-bar">
+                            <div class="skill-bar-fill"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- DATABASE -->
+                <div class="skill-category">
+                    <h3>Database</h3>
+
+                    <div class="skill-item" style="--width: 85%">
+                        <div class="skill-info"><span>MongoDB</span><span>85%</span></div>
+                        <div class="skill-bar">
+                            <div class="skill-bar-fill"></div>
+                        </div>
+                    </div>
+
+                    <div class="skill-item" style="--width: 80%">
+                        <div class="skill-info"><span>Mongoose</span><span>80%</span></div>
+                        <div class="skill-bar">
+                            <div class="skill-bar-fill"></div>
+                        </div>
+                    </div>
+
+                    <div class="skill-item" style="--width: 75%">
+                        <div class="skill-info"><span>Database Design</span><span>75%</span></div>
+                        <div class="skill-bar">
+                            <div class="skill-bar-fill"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- PROGRAMMING & TOOLS -->
+                <div class="skill-category">
+                    <h3>Programming & Tools</h3>
+
+                    <div class="skill-item" style="--width: 75%">
+                        <div class="skill-info"><span>Python</span><span>75%</span></div>
+                        <div class="skill-bar">
+                            <div class="skill-bar-fill"></div>
+                        </div>
+                    </div>
+
+                    <div class="skill-item" style="--width: 70%">
+                        <div class="skill-info"><span>Data Structures & Algorithms</span><span>70%</span></div>
+                        <div class="skill-bar">
+                            <div class="skill-bar-fill"></div>
+                        </div>
+                    </div>
+
+                    <div class="skill-item" style="--width: 80%">
+                        <div class="skill-info"><span>Git & GitHub</span><span>80%</span></div>
+                        <div class="skill-bar">
+                            <div class="skill-bar-fill"></div>
+                        </div>
+                    </div>
+
+                    <div class="skill-item" style="--width: 78%">
+                        <div class="skill-info"><span>Postman / API Testing</span><span>78%</span></div>
+                        <div class="skill-bar">
+                            <div class="skill-bar-fill"></div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <section class="highlights reveal" id="highlights">
+        <h2 class="heading">Tech <span>Highlights</span></h2>
+
+        <div class="highlights-container">
+            <div class="highlight-card">Built 5+ full-stack MERN applications</div>
+            <div class="highlight-card">Designed REST APIs with authentication & authorization</div>
+            <div class="highlight-card">Experience with MongoDB schema design</div>
+            <div class="highlight-card">Version control using Git & GitHub</div>
+            <div class="highlight-card">API testing using Postman</div>
+        </div>
+    </section>
+
+    <section class="projects reveal" id="project">
+        <h2 class="heading">Latest <span>Projects</span></h2>
+
+        <div class="projects-grid">
+
+            <!-- Project 1 -->
+            <div class="project-card">
+                <div class="project-image">
+                    <img src="PG LIFE.png" alt="PGLife Project Screenshot" loading="lazy">
+                </div>
+                <div class="project-content">
+                    <h3>PGLife</h3>
+                    <p>Full-stack web application that helps students discover PG accommodations with city-based
+                        filtering, property listings, and secure backend data handling.</p>
+                    <div class="project-tags">
+                        <span>React</span><span>Node.js</span><span>Express</span><span>MongoDB</span><span>REST
+                            API</span><span>JWT Auth</span>
+                    </div>
+                    <div style="display:flex; gap:12px;">
+                        <a href="https://github.com/Supriya-Dey805/PG_LIFE" target="_blank" rel="noopener noreferrer" class="project-link">GitHub</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Project 3 -->
+            <div class="project-card">
+                <div class="project-image">
+                    <img src="CMS.png" alt="Content Management System Screenshot" loading="lazy">
+                </div>
+                <div class="project-content">
+                    <h3>Content Management System</h3>
+                    <p>Backend-driven CMS that allows creation, editing, and structured management of digital content
+                        with database integration.</p>
+                    <div class="project-tags">
+                        <span>Node.js</span><span>Express</span><span>MongoDB</span><span>REST
+                            API</span><span>CRUD</span><span>Backend</span>
+                    </div>
+                    <div style="display:flex; gap:12px;">
+                        <a href="https://github.com/Supriya-Dey805/Content-Management-System" target="_blank" rel="noopener noreferrer"
+                            class="project-link">GitHub</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Project 4 -->
+            <div class="project-card">
+                <div class="project-image">
+                    <img src="e-comm.png" alt="E-commerce App Screenshot" loading="lazy">
+                </div>
+                <div class="project-content">
+                    <h3>E-Commerce Web App</h3>
+                    <p>Full-stack e-commerce platform with product browsing, cart system, user authentication, and
+                        secure checkout workflow.</p>
+                    <div class="project-tags">
+                        <span>React</span><span>Node.js</span><span>Express</span><span>MongoDB</span><span>JWT
+                            Auth</span><span>Stripe</span>
+                    </div>
+                    <div style="display:flex; gap:12px;">
+                        <a href="https://github.com/Supriya-Dey805/E-comm" target="_blank" rel="noopener noreferrer"
+                            class="project-link">GitHub</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Project 5 -->
+            <div class="project-card">
+                <div class="project-image">
+                    <img src="social-media.png" alt="Social Media App Screenshot" loading="lazy">
+                </div>
+                <div class="project-content">
+                    <h3>Social Media App</h3>
+                    <p>Full-stack social platform where users can create profiles, share posts, like, comment, and
+                        connect with others.</p>
+                    <div class="project-tags">
+                        <span>React</span><span>Node.js</span><span>Express</span><span>MongoDB</span><span>REST
+                            API</span><span>Authentication</span>
+                    </div>
+                    <div style="display:flex; gap:12px;">
+                        
+                        <a href="https://github.com/Supriya-Dey805/social_media_app" target="_blank" rel="noopener noreferrer"
+                            class="project-link">GitHub</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Project 6 -->
+<div class="project-card">
+    <div class="project-image">
+        <img src="blogsphere.png" alt="BlogSphere Screenshot" loading="lazy">
+    </div>
+
+    <div class="project-content">
+        <h3>BlogSphere</h3>
+
+        <p>
+            Advanced full-stack blogging platform with secure authentication,
+            blog creation and editing, likes, comments, bookmarks, search,
+            trending posts, featured blogs, and dark mode support.
+        </p>
+
+        <div class="project-tags">
+            <span>MongoDB</span>
+            <span>Express.js</span>
+            <span>React.js</span>
+            <span>Node.js</span>
+            <span>JWT Auth</span>
+            <span>REST API</span>
+        </div>
+
+        <div style="display:flex; gap:12px;">
+
+            <a href="https://github.com/Supriya-Dey805/Simple_blog-System-" target="_blank" rel="noopener noreferrer" class="project-link">
+                GitHub
+            </a>
+        </div>
+    </div>
+</div>
+
+<div class="project-card">
+    <div class="project-image">
+        <img src="MOVIE_DISCOVERY.png" alt="Movie Discovery App">
+    </div>
+
+    <div class="project-content">
+        <h3>Movie Discovery App</h3>
+
+        <p>
+            Movie discovery platform that allows users to
+            search, explore trending movies, view ratings
+            and discover films through an intuitive interface.
+        </p>
+
+        <div class="project-tags">
+            <span>React.js</span>
+            <span>JavaScript</span>
+            <span>CSS</span>
+            <span>REST API</span>
+        </div>
+
+        <a href="https://github.com/Supriya-Dey805/Movie-Discovery-App" target="_blank" rel="noopener noreferrer" class="project-link">
+            GitHub
+        </a>
+    </div>
+</div>
+
+        </div>
+    </section>
+    <section class="contact reveal" id="contact">
+        <h2 class="heading">Get In <span>Touch</span></h2>
+        <div class="contact-container">
+            <p>Open to internships and full-time opportunities.</p>
+
+            <p style="margin-bottom:20px;">Email:supriyadey769@outlook.com </p>
+
+            <form class="contact-form" aria-label="Contact form" novalidate>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="contact-name">Your Name</label>
+                        <input id="contact-name" type="text" name="from_name" placeholder="Your Name" required aria-required="true">
+                    </div>
+                    <div class="form-group">
+                        <label for="contact-email">Your Email</label>
+                        <input id="contact-email" type="email" name="from_email" placeholder="Your Email" required aria-required="true">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="contact-subject">Subject</label>
+                    <input id="contact-subject" type="text" name="subject" placeholder="Subject" required aria-required="true">
+                </div>
+                <div class="form-group">
+                    <label for="contact-message">Your Message</label>
+                    <textarea id="contact-message" name="message" placeholder="Your Message" required aria-required="true"></textarea>
+                </div>
+                <div class="form-status" aria-live="polite"></div>
+                <button type="submit" class="submit-btn">Send Message <i class='bx bx-send'></i></button>
+            </form>
+        </div>
+    </section>
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-left">
+                <p class="footer-name">Supriya Dey</p>
+                <p class="footer-tag">Full Stack Developer • MERN Stack</p>
+            </div>
+
+            <div class="footer-social">
+                <a href="https://www.linkedin.com/in/supriya-dey-1b4785352/" target="_blank" rel="noopener noreferrer">
+                    <i class='bx bxl-linkedin'></i>
+                </a>
+                <a href="https://github.com/Supriya-Dey805" target="_blank" rel="noopener noreferrer">
+                    <i class='bx bxl-github'></i>
+                </a>
+            </div>
+        </div>
+
+        <div class="footer-bottom">
+            <p>© 2026 Supriya Dey. All rights reserved.</p>
+        </div>
+    </footer>
+    <script>
 window.onload = function () {
 
     // EmailJS init
